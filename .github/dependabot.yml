@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    groups:
+      actions:
+        patterns:
+          - '*'
+
+  # Watch the examples/ directory so users copy-pasting from our README get
+  # current action versions in their own workflows.
+  - package-ecosystem: 'github-actions'
+    directory: '/examples'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+      - 'docs'

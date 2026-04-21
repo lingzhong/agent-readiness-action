@@ -1,0 +1,49 @@
+# Example: gate agent-readiness on every GitHub Pages deploy.
+
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v6
+      - name: Build
+        run: |
+          # Replace with your static-site build.
+          mkdir -p _site && cp -r public/* _site/
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    outputs:
+      url: ${{ steps.publish.outputs.page_url }}
+    steps:
+      - id: publish
+        uses: actions/deploy-pages@v5
+
+  agent-readiness:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Agent Readiness
+        uses: lingzhong/agent-readiness-action@v0.1
+        with:
+          url: ${{ needs.deploy.outputs.url }}
+          min-level: 2

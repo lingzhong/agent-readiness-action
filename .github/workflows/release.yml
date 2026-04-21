@@ -1,0 +1,50 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update release draft
+        uses: release-drafter/release-drafter@5de93583980a40bd78603b6dfdcda5b4df377b32 # v7.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Maintain the floating major/minor tag (v0.1, eventually v1) on publish.
+  # Runs only when a real release (not a draft) is published.
+  tag-major:
+    if: github.event_name == 'release' && github.event.action == 'published'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Update floating major/minor tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          # Extract v0.1 from v0.1.2, or v1 from v1.2.3.
+          if [[ "$tag" =~ ^v0\.[0-9]+\.[0-9]+$ ]]; then
+            floating="${tag%.*}"
+          elif [[ "$tag" =~ ^v[1-9][0-9]*\.[0-9]+\.[0-9]+$ ]]; then
+            floating="${tag%%.*}"
+          else
+            echo "tag $tag is not a semver release; skipping"
+            exit 0
+          fi
+          git tag -f "$floating" "$tag"
+          git push origin "$floating" --force

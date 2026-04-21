@@ -1,0 +1,45 @@
+# Example: gate agent-readiness on every Cloudflare Pages deploy.
+#
+# Drop this file into .github/workflows/ and adjust project-name and
+# directory to match your setup.
+
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.publish.outputs.url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build site
+        run: npm ci && npm run build
+
+      - name: Publish to Cloudflare Pages
+        id: publish
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./dist --project-name=example --branch=${{ github.ref_name }}
+        # The wrangler-action sets `url` as a step output.
+
+  agent-readiness:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Agent Readiness
+        uses: lingzhong/agent-readiness-action@v0.1
+        with:
+          url: ${{ needs.deploy.outputs.url }}
+          min-level: 2

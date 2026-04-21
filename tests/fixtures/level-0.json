@@ -1,0 +1,110 @@
+{
+  "url": "https://github.com",
+  "scannedAt": "2026-04-20T03:36:43.752Z",
+  "level": 0,
+  "levelName": "Not Ready",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {
+        "status": "pass",
+        "message": "robots.txt exists with valid format",
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /robots.txt",
+            "request": {"url": "https://github.com/robots.txt", "method": "GET"},
+            "response": {"status": 200, "statusText": "OK", "headers": {"content-type": "text/plain"}},
+            "finding": {"outcome": "positive", "summary": "Received valid robots.txt (200, text/plain)"}
+          },
+          {"action": "conclude", "label": "Conclusion", "finding": {"outcome": "positive", "summary": "robots.txt exists with valid format"}}
+        ],
+        "durationMs": 0
+      },
+      "sitemap": {
+        "status": "fail",
+        "message": "sitemap.xml not found",
+        "evidence": [
+          {"action": "conclude", "label": "Conclusion", "finding": {"outcome": "negative", "summary": "sitemap.xml not found at any expected location"}}
+        ],
+        "durationMs": 234
+      },
+      "linkHeaders": {
+        "status": "fail",
+        "message": "No Link headers found on homepage",
+        "evidence": [
+          {"action": "conclude", "label": "Conclusion", "finding": {"outcome": "negative", "summary": "No Link headers found on homepage"}}
+        ],
+        "durationMs": 533
+      }
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {
+        "status": "fail",
+        "message": "Site returned status 406 for markdown request",
+        "evidence": [
+          {"action": "conclude", "label": "Conclusion", "finding": {"outcome": "negative", "summary": "Site returned status 406 for markdown request"}}
+        ],
+        "durationMs": 870
+      }
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {
+        "status": "pass",
+        "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots",
+        "evidence": [],
+        "durationMs": 0
+      },
+      "contentSignals": {
+        "status": "fail",
+        "message": "No Content Signals found in robots.txt",
+        "evidence": [],
+        "durationMs": 0
+      },
+      "webBotAuth": {
+        "status": "neutral",
+        "message": "Web Bot Auth directory not found (informational only)",
+        "evidence": [],
+        "durationMs": 219
+      }
+    },
+    "discovery": {
+      "apiCatalog": {"status": "fail", "message": "API Catalog not found", "evidence": [], "durationMs": 414},
+      "oauthDiscovery": {"status": "fail", "message": "No OAuth/OIDC discovery metadata found", "evidence": [], "durationMs": 278},
+      "oauthProtectedResource": {"status": "fail", "message": "No OAuth Protected Resource Metadata found", "evidence": [], "durationMs": 267},
+      "mcpServerCard": {"status": "fail", "message": "MCP Server Card not found", "evidence": [], "durationMs": 389},
+      "a2aAgentCard": {"status": "fail", "message": "A2A Agent Card not found", "evidence": [], "durationMs": 389},
+      "agentSkills": {"status": "fail", "message": "Agent Skills index not found", "evidence": [], "durationMs": 610},
+      "webMcp": {"status": "fail", "message": "No WebMCP tools detected on page load", "evidence": [], "durationMs": 7444}
+    },
+    "commerce": {
+      "x402": {"status": "neutral", "message": "x402 payment protocol not detected (not a commerce site)", "evidence": [], "durationMs": 579},
+      "ucp": {"status": "neutral", "message": "UCP profile not found (not a commerce site)", "evidence": [], "durationMs": 488},
+      "acp": {"status": "neutral", "message": "ACP discovery document not found (not a commerce site)", "evidence": [], "durationMs": 540},
+      "ap2": {"status": "neutral", "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)", "evidence": []}
+    }
+  },
+  "nextLevel": {
+    "target": 1,
+    "name": "Basic Web Presence",
+    "requirements": [
+      {
+        "check": "sitemap",
+        "description": "Publish /sitemap.xml with canonical URLs",
+        "shortPrompt": "Generate /sitemap.xml listing canonical URLs, keep it updated on publish, and reference it from /robots.txt.",
+        "specUrls": ["https://www.sitemaps.org/protocol.html"],
+        "prompt": "Generate /sitemap.xml listing canonical URLs, keep it updated on publish, and reference it from /robots.txt.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/sitemap/SKILL.md"
+      },
+      {
+        "check": "linkHeaders",
+        "description": "Include Link response headers for agent discovery (RFC 8288)",
+        "shortPrompt": "Add Link response headers to your homepage pointing to API docs, catalogs, or machine-readable descriptions.",
+        "specUrls": ["https://www.rfc-editor.org/rfc/rfc8288", "https://www.rfc-editor.org/rfc/rfc9727#section-3"],
+        "prompt": "Add Link response headers to your homepage that point agents to useful resources.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/link-headers/SKILL.md"
+      }
+    ]
+  },
+  "isCommerce": false,
+  "commerceSignals": []
+}

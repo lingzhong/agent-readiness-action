@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a problem with the action.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Action version
+      description: Which tag or SHA are you using? (e.g. v0.1.0, v0.1, or a commit SHA)
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: runner
+    attributes:
+      label: Runner
+      description: GitHub Actions runner image (e.g. ubuntu-22.04, macos-14)
+      placeholder: ubuntu-22.04
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow snippet
+      description: The `uses:` block and inputs you're passing. Redact any secrets.
+      render: yaml
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Paste the failing step's output. Include the raw `response` output if available.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true

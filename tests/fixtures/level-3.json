@@ -1,0 +1,69 @@
+{
+  "url": "https://example-level-3.test",
+  "scannedAt": "2026-04-20T03:37:02.759Z",
+  "level": 3,
+  "levelName": "Agent-Readable",
+  "_synthesisNote": "Synthesized from the vercel.com (level 2) capture with markdownNegotiation flipped to pass, level/levelName/nextLevel updated. Real level-3 captures welcome in a follow-up PR.",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {"status": "pass", "message": "robots.txt exists with valid format", "evidence": [], "durationMs": 0},
+      "sitemap": {"status": "pass", "message": "sitemap.xml exists with valid structure", "evidence": [], "durationMs": 281},
+      "linkHeaders": {"status": "fail", "message": "No Link headers found on homepage", "evidence": [], "durationMs": 207}
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {"status": "pass", "message": "Site supports Markdown for Agents", "evidence": [], "durationMs": 1201}
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {"status": "pass", "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots", "evidence": [], "durationMs": 0},
+      "contentSignals": {"status": "pass", "message": "Content Signals found in robots.txt", "evidence": [], "durationMs": 0},
+      "webBotAuth": {"status": "neutral", "message": "Web Bot Auth directory not found (informational only)", "evidence": [], "durationMs": 59}
+    },
+    "discovery": {
+      "apiCatalog": {"status": "fail", "message": "API Catalog not found", "evidence": [], "durationMs": 138},
+      "oauthDiscovery": {"status": "pass", "message": "OpenID Connect discovery metadata found", "evidence": [], "durationMs": 62},
+      "oauthProtectedResource": {"status": "fail", "message": "No OAuth Protected Resource Metadata found", "evidence": [], "durationMs": 84},
+      "mcpServerCard": {"status": "fail", "message": "MCP Server Card not found", "evidence": [], "durationMs": 139},
+      "a2aAgentCard": {"status": "fail", "message": "A2A Agent Card not found", "evidence": [], "durationMs": 128},
+      "agentSkills": {"status": "fail", "message": "Agent Skills index not found", "evidence": [], "durationMs": 212},
+      "webMcp": {"status": "fail", "message": "No WebMCP tools detected on page load", "evidence": [], "durationMs": 4728}
+    },
+    "commerce": {
+      "x402": {"status": "neutral", "message": "x402 payment protocol not detected (not a commerce site)", "evidence": [], "durationMs": 1410},
+      "ucp": {"status": "neutral", "message": "UCP profile not found (not a commerce site)", "evidence": [], "durationMs": 135},
+      "acp": {"status": "neutral", "message": "ACP discovery document not found (not a commerce site)", "evidence": [], "durationMs": 176},
+      "ap2": {"status": "neutral", "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)", "evidence": []}
+    }
+  },
+  "nextLevel": {
+    "target": 4,
+    "name": "Agent-Integrated",
+    "requirements": [
+      {
+        "check": "apiCatalog",
+        "description": "Publish an API Catalog at /.well-known/api-catalog",
+        "shortPrompt": "Serve /.well-known/api-catalog (application/linkset+json) listing your APIs.",
+        "specUrls": ["https://www.rfc-editor.org/rfc/rfc9727"],
+        "prompt": "Serve /.well-known/api-catalog with content-type application/linkset+json describing your available APIs.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/api-catalog/SKILL.md"
+      },
+      {
+        "check": "mcpServerCard",
+        "description": "Publish an MCP Server Card at /.well-known/mcp/server-card.json",
+        "shortPrompt": "Serve /.well-known/mcp/server-card.json describing your MCP server.",
+        "specUrls": ["https://modelcontextprotocol.io/"],
+        "prompt": "Serve /.well-known/mcp/server-card.json (application/json) with name, version, transport, and capabilities.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/mcp-server-card/SKILL.md"
+      },
+      {
+        "check": "agentSkills",
+        "description": "Publish an Agent Skills index at /.well-known/agent-skills/index.json",
+        "shortPrompt": "Serve an Agent Skills index at /.well-known/agent-skills/index.json listing your agent's skills.",
+        "specUrls": ["https://agentskills.io/specification"],
+        "prompt": "Serve /.well-known/agent-skills/index.json with a $schema field and a skills[] array.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/agent-skills-index/SKILL.md"
+      }
+    ]
+  },
+  "isCommerce": false,
+  "commerceSignals": []
+}

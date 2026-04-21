@@ -1,0 +1,101 @@
+{
+  "url": "https://lingzhong.org",
+  "scannedAt": "2026-04-20T03:37:09.395Z",
+  "level": 4,
+  "levelName": "Agent-Integrated",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {"status": "pass", "message": "robots.txt exists with valid format", "evidence": [], "durationMs": 0},
+      "sitemap": {"status": "pass", "message": "sitemap.xml exists with valid structure", "evidence": [], "durationMs": 26},
+      "linkHeaders": {
+        "status": "pass",
+        "message": "Found agent-useful Link relations: api-catalog",
+        "details": {"relationsFound": [{"rel": "api-catalog", "href": "https://lingzhong.org/.well-known/api-catalog"}], "totalLinks": 3},
+        "evidence": [],
+        "durationMs": 125
+      }
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {
+        "status": "pass",
+        "message": "Site supports Markdown for Agents",
+        "details": {"contentType": "text/markdown; charset=utf-8"},
+        "evidence": [],
+        "durationMs": 575
+      }
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {"status": "pass", "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots", "evidence": [], "durationMs": 0},
+      "contentSignals": {
+        "status": "pass",
+        "message": "Content Signals found in robots.txt",
+        "details": {"signals": [{"userAgent": "*", "path": null, "aiTrain": "yes", "search": "yes", "aiInput": "yes"}], "signalCount": 1},
+        "evidence": [],
+        "durationMs": 0
+      },
+      "webBotAuth": {"status": "neutral", "message": "Web Bot Auth directory returned HTML instead of JSON (informational only)", "evidence": [], "durationMs": 40}
+    },
+    "discovery": {
+      "apiCatalog": {
+        "status": "pass",
+        "message": "API Catalog found with 1 API listed",
+        "details": {"apiCount": 1, "linksetEntries": 1, "hasItems": false, "hasNestedCatalogs": false, "correctContentType": true},
+        "evidence": [],
+        "durationMs": 71
+      },
+      "oauthDiscovery": {"status": "fail", "message": "No OAuth/OIDC discovery metadata found", "evidence": [], "durationMs": 46},
+      "oauthProtectedResource": {"status": "fail", "message": "No OAuth Protected Resource Metadata found", "evidence": [], "durationMs": 56},
+      "mcpServerCard": {
+        "status": "pass",
+        "message": "MCP Server Card found at /.well-known/mcp/server-card.json",
+        "details": {"path": "/.well-known/mcp/server-card.json", "format": "sep", "name": "lingzhong-mcp", "hasVersion": true, "hasTransport": true, "hasCapabilities": true, "hasTools": false, "hasDescription": false},
+        "evidence": [],
+        "durationMs": 60
+      },
+      "a2aAgentCard": {
+        "status": "fail",
+        "message": "Invalid A2A Agent Card: 1 skill missing required \"id\" or \"name\"; Missing or empty required field \"supportedInterfaces\"",
+        "evidence": [],
+        "durationMs": 62
+      },
+      "agentSkills": {
+        "status": "pass",
+        "message": "Agent Skills index exists with valid JSON",
+        "details": {"skillCount": 1, "specVersion": "0.2.0", "path": "/.well-known/agent-skills/index.json", "v2ValidEntries": true},
+        "evidence": [],
+        "durationMs": 70
+      },
+      "webMcp": {"status": "fail", "message": "No WebMCP tools detected on page load", "evidence": [], "durationMs": 3913}
+    },
+    "commerce": {
+      "x402": {"status": "neutral", "message": "x402 payment protocol not detected (not a commerce site)", "evidence": [], "durationMs": 227},
+      "ucp": {"status": "neutral", "message": "UCP profile returned HTML instead of expected format (not a commerce site)", "evidence": [], "durationMs": 81},
+      "acp": {"status": "neutral", "message": "ACP discovery document returned HTML instead of JSON (not a commerce site)", "evidence": [], "durationMs": 107},
+      "ap2": {"status": "neutral", "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)", "evidence": []}
+    }
+  },
+  "nextLevel": {
+    "target": 5,
+    "name": "Agent-Native",
+    "requirements": [
+      {
+        "check": "oauthProtectedResource",
+        "description": "Publish OAuth Protected Resource Metadata so agents can discover how to authenticate",
+        "shortPrompt": "Publish /.well-known/oauth-protected-resource with your resource identifier and authorization_servers so agents can discover how to authenticate.",
+        "specUrls": ["https://www.rfc-editor.org/rfc/rfc9728"],
+        "prompt": "Publish /.well-known/oauth-protected-resource with your resource identifier, authorization_servers, and scopes_supported.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/oauth-protected-resource/SKILL.md"
+      },
+      {
+        "check": "a2aAgentCard",
+        "description": "Publish an A2A Agent Card for agent-to-agent discovery",
+        "shortPrompt": "Serve an A2A Agent Card at /.well-known/agent-card.json with your agent name, version, supported interfaces, capabilities, and skills.",
+        "specUrls": ["https://a2a-protocol.org/latest/specification/", "https://a2a-protocol.org/latest/topics/agent-discovery/"],
+        "prompt": "Serve an A2A Agent Card (JSON) at /.well-known/agent-card.json describing your agent. Include name, version, description, supportedInterfaces, capabilities, and skills.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/a2a-agent-card/SKILL.md"
+      }
+    ]
+  },
+  "isCommerce": false,
+  "commerceSignals": []
+}

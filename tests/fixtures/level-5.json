@@ -1,0 +1,844 @@
+{
+  "url": "https://agent-native-example.com",
+  "scannedAt": "2026-04-20T17:38:41.566Z",
+  "level": 5,
+  "levelName": "Agent-Native",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {
+        "status": "pass",
+        "message": "robots.txt exists with valid format",
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /robots.txt",
+            "request": {
+              "url": "https://agent-native-example.com/robots.txt",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/plain; charset=utf-8",
+                "content-length": "191"
+              },
+              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received valid robots.txt (200, text/plain; charset=utf-8)"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Validate robots.txt structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Contains valid User-agent directive(s)"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "robots.txt exists with valid format"
+            }
+          }
+        ],
+        "durationMs": 0
+      },
+      "sitemap": {
+        "status": "pass",
+        "message": "sitemap.xml exists with valid structure",
+        "details": {
+          "url": "https://agent-native-example.com/sitemap.xml",
+          "fromRobotsTxt": true,
+          "format": "xml"
+        },
+        "evidence": [
+          {
+            "action": "parse",
+            "label": "Extract Sitemap directives from robots.txt",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found 1 Sitemap directive(s) in robots.txt"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /sitemap.xml",
+            "request": {
+              "url": "https://agent-native-example.com/sitemap.xml",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/xml"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found valid xml sitemap at https://agent-native-example.com/sitemap.xml"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "sitemap.xml exists with valid structure"
+            }
+          }
+        ],
+        "durationMs": 1567
+      },
+      "linkHeaders": {
+        "status": "pass",
+        "message": "Found agent-useful Link relations: api-catalog",
+        "details": {
+          "relationsFound": [
+            {
+              "rel": "api-catalog",
+              "href": "/.well-known/api-catalog",
+              "type": "application/linkset+json"
+            }
+          ],
+          "totalLinks": 2
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /",
+            "request": {
+              "url": "https://agent-native-example.com",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/html; charset=utf-8",
+                "link": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </.well-known/agent-skills/index.json>; rel=\"agent-skills\"; type=\"application/json\""
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Homepage returned 200 with Link header"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Parse Link header (RFC 8288)",
+            "finding": {
+              "outcome": "neutral",
+              "summary": "Parsed 2 link(s) from header"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Match agent-useful relations",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found agent-useful relations: api-catalog"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found agent-useful Link relations: api-catalog"
+            }
+          }
+        ],
+        "durationMs": 458
+      }
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {
+        "status": "pass",
+        "message": "Site supports Markdown for Agents",
+        "details": {
+          "contentType": "text/markdown; charset=utf-8"
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET homepage (Accept: text/markdown)",
+            "request": {
+              "url": "http://agent-native-example.com/",
+              "method": "GET",
+              "headers": {
+                "accept": "text/markdown"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Response content-type is text/markdown; charset=utf-8 -- site supports markdown negotiation"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/markdown; charset=utf-8"
+              }
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Site supports Markdown for Agents"
+            }
+          }
+        ],
+        "durationMs": 942
+      }
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {
+        "status": "pass",
+        "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots",
+        "details": {
+          "checkedBots": [
+            "gptbot",
+            "chatgpt-user",
+            "google-extended",
+            "ccbot",
+            "anthropic-ai",
+            "claude-web",
+            "bytespider",
+            "perplexitybot",
+            "cohere-ai",
+            "applebot-extended",
+            "amazonbot",
+            "meta-externalagent",
+            "facebookbot",
+            "omgilibot",
+            "diffbot"
+          ]
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /robots.txt",
+            "request": {
+              "url": "https://agent-native-example.com/robots.txt",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/plain; charset=utf-8",
+                "content-length": "191"
+              },
+              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received valid robots.txt (200, text/plain; charset=utf-8)"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Scan for AI bot User-agent directives",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Checked 15 AI bot user agents -- none found, but wildcard rules apply"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots"
+            }
+          }
+        ],
+        "durationMs": 0
+      },
+      "contentSignals": {
+        "status": "pass",
+        "message": "Content Signals found in robots.txt",
+        "details": {
+          "signals": [
+            {
+              "userAgent": "*",
+              "path": null,
+              "aiTrain": "no",
+              "search": "yes",
+              "aiInput": "no"
+            }
+          ],
+          "signalCount": 1
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /robots.txt",
+            "request": {
+              "url": "https://agent-native-example.com/robots.txt",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/plain; charset=utf-8",
+                "content-length": "191"
+              },
+              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received valid robots.txt (200, text/plain; charset=utf-8)"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Parse Content-Signal directives",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found 1 Content-Signal directive(s)"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Content Signals found in robots.txt"
+            }
+          }
+        ],
+        "durationMs": 0
+      },
+      "webBotAuth": {
+        "status": "neutral",
+        "message": "Web Bot Auth directory not found (informational only)",
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/http-message-signatures-directory",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/http-message-signatures-directory",
+              "method": "GET"
+            },
+            "response": {
+              "status": 404,
+              "statusText": "Not Found",
+              "headers": {
+                "content-type": "text/html; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "negative",
+              "summary": "Server returned 404 -- Web Bot Auth directory not found"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "negative",
+              "summary": "Web Bot Auth directory not found"
+            }
+          }
+        ],
+        "durationMs": 103
+      }
+    },
+    "discovery": {
+      "apiCatalog": {
+        "status": "pass",
+        "message": "API Catalog found with 3 APIs listed",
+        "details": {
+          "apiCount": 3,
+          "linksetEntries": 3,
+          "hasItems": false,
+          "hasNestedCatalogs": false,
+          "correctContentType": true
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/api-catalog",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/api-catalog",
+              "method": "GET",
+              "headers": {
+                "Accept": "application/linkset+json, application/json"
+              }
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/linkset+json",
+                "link": "<https://agent-native-example.com/.well-known/agent-skills/index.json>; rel=\"related\"; type=\"application/json\""
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received 200 with valid JSON response"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate Linkset structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found \"linkset\" array with 3 entries"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Analyze linkset entries",
+            "finding": {
+              "outcome": "positive",
+              "summary": "3 APIs listed, correct content-type"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "API Catalog found with 3 APIs listed"
+            }
+          }
+        ],
+        "durationMs": 355
+      },
+      "oauthDiscovery": {
+        "status": "pass",
+        "message": "OpenID Connect discovery metadata found",
+        "details": {
+          "source": "openid-configuration",
+          "issuer": "https://hzgpynevcorszmfhlahp.supabase.co/auth/v1",
+          "hasAuthorizationEndpoint": true,
+          "hasTokenEndpoint": true,
+          "hasJwksUri": true,
+          "grantTypes": [
+            "authorization_code",
+            "refresh_token"
+          ]
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/oauth-authorization-server",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/oauth-authorization-server",
+              "method": "GET"
+            },
+            "response": {
+              "status": 404,
+              "statusText": "Not Found",
+              "headers": {
+                "content-type": "text/html; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "negative",
+              "summary": "oauth-authorization-server returned 404"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/openid-configuration",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/openid-configuration",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received JSON from openid-configuration"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate openid-configuration structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Valid metadata with issuer: https://hzgpynevcorszmfhlahp.supabase.co/auth/v1"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "OpenID Connect discovery metadata found"
+            }
+          }
+        ],
+        "durationMs": 222
+      },
+      "oauthProtectedResource": {
+        "status": "pass",
+        "message": "OAuth Protected Resource Metadata found (well-known)",
+        "details": {
+          "discoveryMethod": "well-known",
+          "resource": "https://agent-native-example.com",
+          "authorizationServers": [
+            "https://hzgpynevcorszmfhlahp.supabase.co/auth/v1"
+          ],
+          "scopesSupported": [
+            "openid",
+            "profile",
+            "email"
+          ],
+          "bearerMethodsSupported": [
+            "header"
+          ],
+          "resourceDocumentation": "https://agent-native-example.com/.well-known/agent-skills/buy-ticket-x402/SKILL.md"
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/oauth-protected-resource",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/oauth-protected-resource",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json",
+                "content-length": "436"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received JSON response (200)"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate resource metadata",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Valid metadata with resource: https://agent-native-example.com"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "OAuth Protected Resource Metadata found (well-known)"
+            }
+          }
+        ],
+        "durationMs": 257
+      },
+      "mcpServerCard": {
+        "status": "pass",
+        "message": "MCP Server Card found at /.well-known/mcp/server-card.json",
+        "details": {
+          "path": "/.well-known/mcp/server-card.json",
+          "format": "sep",
+          "name": "investorcamp",
+          "hasVersion": true,
+          "hasTransport": true,
+          "hasCapabilities": true,
+          "hasTools": false,
+          "hasDescription": false
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/mcp/server-card.json",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/mcp/server-card.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json",
+                "content-length": "974"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found valid MCP Server Card (sep format) at /.well-known/mcp/server-card.json"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "MCP Server Card found at /.well-known/mcp/server-card.json"
+            }
+          }
+        ],
+        "durationMs": 215
+      },
+      "a2aAgentCard": {
+        "status": "fail",
+        "message": "A2A Agent Card not found",
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/agent-card.json",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/agent-card.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 404,
+              "statusText": "Not Found",
+              "headers": {
+                "content-type": "text/html; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "negative",
+              "summary": "Server returned 404 -- A2A Agent Card not found"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "negative",
+              "summary": "A2A Agent Card not found"
+            }
+          }
+        ],
+        "durationMs": 188
+      },
+      "agentSkills": {
+        "status": "pass",
+        "message": "Agent Skills index exists with valid JSON",
+        "details": {
+          "skillCount": 1,
+          "specVersion": "0.2.0",
+          "path": "/.well-known/agent-skills/index.json",
+          "v2ValidEntries": false
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/agent-skills/index.json",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/agent-skills/index.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json",
+                "content-length": "491"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received 200 response with content-type: application/json"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Agent Skills index exists with valid JSON"
+            }
+          }
+        ],
+        "durationMs": 360
+      },
+      "webMcp": {
+        "status": "fail",
+        "message": "No WebMCP tools detected on page load",
+        "evidence": [
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "negative",
+              "summary": "No WebMCP tools detected on page load"
+            }
+          }
+        ],
+        "durationMs": 4396
+      }
+    },
+    "commerce": {
+      "x402": {
+        "status": "pass",
+        "message": "x402 payment protocol detected on /api",
+        "details": {
+          "detectionMethod": "probe",
+          "x402Version": 2,
+          "schemes": [
+            "exact"
+          ],
+          "networks": [
+            "eip155:8453"
+          ],
+          "routeFound": "/api",
+          "bazaarListed": false,
+          "bazaarEndpointCount": 0,
+          "hasDescription": true
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /api",
+            "request": {
+              "url": "https://agent-native-example.com/api",
+              "method": "GET"
+            },
+            "response": {
+              "status": 402,
+              "statusText": "Payment Required",
+              "headers": {
+                "content-type": "application/json"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "/api returned 402 with valid PAYMENT-REQUIRED header (v2)"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "x402 payment protocol detected on /api"
+            }
+          }
+        ],
+        "durationMs": 1022
+      },
+      "ucp": {
+        "status": "pass",
+        "message": "UCP profile exists",
+        "details": {
+          "hasVersion": true,
+          "hasServices": false,
+          "hasCapabilities": false
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/ucp",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/ucp",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Has ucp.version \"2026-04-08\""
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "UCP profile exists"
+            }
+          }
+        ],
+        "durationMs": 387
+      },
+      "acp": {
+        "status": "pass",
+        "message": "ACP discovery document exists",
+        "details": {
+          "protocolVersion": "2026-01-30",
+          "supportedVersions": [
+            "2026-01-30"
+          ],
+          "apiBaseUrl": "https://agent-native-example.com/api",
+          "transports": [
+            "rest"
+          ],
+          "services": [
+            "orders"
+          ]
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/acp.json",
+            "request": {
+              "url": "https://agent-native-example.com/.well-known/acp.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json",
+                "content-length": "441"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found ACP protocol version \"2026-01-30\" with 1 transport(s) and 1 service(s)"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "ACP discovery document exists"
+            }
+          }
+        ],
+        "durationMs": 728
+      },
+      "ap2": {
+        "status": "neutral",
+        "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)",
+        "evidence": [
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "negative",
+              "summary": "No A2A Agent Card found -- AP2 requires an A2A Agent Card"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "isCommerce": false,
+  "commerceSignals": [
+    "url:/cart",
+    "prices:multiple"
+  ]
+}

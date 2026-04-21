@@ -1,0 +1,53 @@
+{
+  "url": "https://www.anthropic.com",
+  "redirectedFrom": "https://anthropic.com",
+  "scannedAt": "2026-04-20T03:36:56.395Z",
+  "level": 1,
+  "levelName": "Basic Web Presence",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {"status": "pass", "message": "robots.txt exists with valid format", "evidence": [], "durationMs": 0},
+      "sitemap": {"status": "pass", "message": "sitemap.xml exists with valid structure", "evidence": [], "durationMs": 4377},
+      "linkHeaders": {"status": "unableToCheck", "message": "Could not check Link headers: The operation was aborted", "evidence": [], "durationMs": 5002}
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {"status": "fail", "message": "Site does not support Markdown for Agents", "evidence": [], "durationMs": 955}
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {"status": "pass", "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots", "evidence": [], "durationMs": 0},
+      "contentSignals": {"status": "fail", "message": "No Content Signals found in robots.txt", "evidence": [], "durationMs": 0},
+      "webBotAuth": {"status": "neutral", "message": "Web Bot Auth directory not found (informational only)", "evidence": [], "durationMs": 324}
+    },
+    "discovery": {
+      "apiCatalog": {"status": "fail", "message": "API Catalog not found", "evidence": [], "durationMs": 4914},
+      "oauthDiscovery": {"status": "fail", "message": "No OAuth/OIDC discovery metadata found", "evidence": [], "durationMs": 5000},
+      "oauthProtectedResource": {"status": "fail", "message": "No OAuth Protected Resource Metadata found", "evidence": [], "durationMs": 5000},
+      "mcpServerCard": {"status": "fail", "message": "MCP Server Card not found", "evidence": [], "durationMs": 5000},
+      "a2aAgentCard": {"status": "fail", "message": "A2A Agent Card not found", "evidence": [], "durationMs": 2267},
+      "agentSkills": {"status": "fail", "message": "Agent Skills index not found", "evidence": [], "durationMs": 5141},
+      "webMcp": {"status": "fail", "message": "No WebMCP tools detected on page load", "evidence": [], "durationMs": 9013}
+    },
+    "commerce": {
+      "x402": {"status": "unableToCheck", "message": "Could not check x402 support: all requests failed", "evidence": [], "durationMs": 3000},
+      "ucp": {"status": "unableToCheck", "message": "Could not fetch UCP profile: The operation was aborted", "evidence": [], "durationMs": 5000},
+      "acp": {"status": "unableToCheck", "message": "Could not fetch ACP discovery document: The operation was aborted", "evidence": [], "durationMs": 5000},
+      "ap2": {"status": "neutral", "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)", "evidence": []}
+    }
+  },
+  "nextLevel": {
+    "target": 2,
+    "name": "Bot-Aware",
+    "requirements": [
+      {
+        "check": "contentSignals",
+        "description": "Declare AI content usage preferences with Content Signals in robots.txt",
+        "shortPrompt": "Add Content-Signal directives to your robots.txt declaring preferences for ai-train, search, and ai-input.",
+        "specUrls": ["https://contentsignals.org/", "https://datatracker.ietf.org/doc/draft-romm-aipref-contentsignals/"],
+        "prompt": "Add Content-Signal directives to your robots.txt declaring preferences for ai-train, search, and ai-input. For example:\nContent-Signal: ai-train=no, search=yes, ai-input=no",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/content-signals/SKILL.md"
+      }
+    ]
+  },
+  "isCommerce": false,
+  "commerceSignals": []
+}

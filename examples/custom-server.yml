@@ -1,0 +1,27 @@
+# Example: scan a production URL on a fixed cron, independent of deploys.
+#
+# Useful when your site is hosted on infra that doesn't produce a per-deploy
+# URL output (bare metal, kubernetes, long-lived preview envs, etc.).
+
+name: agent-readiness
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Agent Readiness
+        uses: lingzhong/agent-readiness-action@v0.1
+        with:
+          url: https://example.com
+          min-level: 4
+          # In production-monitoring mode you probably want hard failures if
+          # the scanner itself is down, so you notice the signal dropping.
+          fail-on-scanner-unavailable: true

@@ -1,0 +1,76 @@
+name: 'Check Agent Readiness'
+description: "CI gate for your site's agent-readiness level 🤖✅"
+author: 'lingzhong'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+inputs:
+  url:
+    description: 'URL to scan (required).'
+    required: true
+  min-level:
+    description: 'Fail if detected level is below this (0-5). Default 2 = Bot-Aware (Content-Signal directives present).'
+    required: false
+    default: '2'
+  wait-for-url:
+    description: 'Poll the target URL until it is reachable before scanning.'
+    required: false
+    default: 'true'
+  wait-timeout:
+    description: 'Max seconds to wait for the target URL to become reachable.'
+    required: false
+    default: '60'
+  wait-interval:
+    description: 'Seconds between target-URL reachability polls.'
+    required: false
+    default: '3'
+  scanner-endpoint:
+    description: 'Scanner API endpoint. Override for self-hosted or alternative scanners.'
+    required: false
+    default: 'https://isitagentready.com/api/scan'
+  scanner-retries:
+    description: 'Retries on scanner API call.'
+    required: false
+    default: '3'
+  scanner-retry-delay:
+    description: 'Seconds between scanner retries.'
+    required: false
+    default: '5'
+  fail-on-scanner-unavailable:
+    description: 'If true, hard-fail when the scanner is unreachable or returns a malformed response. Default false warns and passes.'
+    required: false
+    default: 'false'
+  annotations:
+    description: 'Emit ::error:: / ::warning:: workflow commands when running under GitHub Actions.'
+    required: false
+    default: 'true'
+
+outputs:
+  level:
+    description: 'Detected agent-readiness level (integer 0-5), or empty if the scan did not complete.'
+    value: ${{ steps.check.outputs.level }}
+  passed:
+    description: "'true' if gate passed, 'false' otherwise."
+    value: ${{ steps.check.outputs.passed }}
+  response:
+    description: 'Raw scanner JSON response (truncated if very large).'
+    value: ${{ steps.check.outputs.response }}
+
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      env:
+        INPUT_URL: ${{ inputs.url }}
+        INPUT_MIN_LEVEL: ${{ inputs.min-level }}
+        INPUT_WAIT_FOR_URL: ${{ inputs.wait-for-url }}
+        INPUT_WAIT_TIMEOUT: ${{ inputs.wait-timeout }}
+        INPUT_WAIT_INTERVAL: ${{ inputs.wait-interval }}
+        INPUT_SCANNER_ENDPOINT: ${{ inputs.scanner-endpoint }}
+        INPUT_SCANNER_RETRIES: ${{ inputs.scanner-retries }}
+        INPUT_SCANNER_RETRY_DELAY: ${{ inputs.scanner-retry-delay }}
+        INPUT_FAIL_ON_SCANNER_UNAVAILABLE: ${{ inputs.fail-on-scanner-unavailable }}
+        INPUT_ANNOTATIONS: ${{ inputs.annotations }}
+      run: ${{ github.action_path }}/scripts/check-readiness.sh

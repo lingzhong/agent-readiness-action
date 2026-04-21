@@ -1,0 +1,58 @@
+{
+  "url": "https://vercel.com",
+  "scannedAt": "2026-04-20T03:37:02.759Z",
+  "level": 2,
+  "levelName": "Bot-Aware",
+  "checks": {
+    "discoverability": {
+      "robotsTxt": {"status": "pass", "message": "robots.txt exists with valid format", "evidence": [], "durationMs": 0},
+      "sitemap": {"status": "pass", "message": "sitemap.xml exists with valid structure", "evidence": [], "durationMs": 281},
+      "linkHeaders": {"status": "fail", "message": "No Link headers found on homepage", "evidence": [], "durationMs": 207}
+    },
+    "contentAccessibility": {
+      "markdownNegotiation": {"status": "fail", "message": "Site does not support Markdown for Agents", "evidence": [], "durationMs": 1201}
+    },
+    "botAccessControl": {
+      "robotsTxtAiRules": {"status": "pass", "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots", "evidence": [], "durationMs": 0},
+      "contentSignals": {
+        "status": "pass",
+        "message": "Content Signals found in robots.txt",
+        "details": {"signals": [{"userAgent": "*", "path": null, "aiTrain": "no", "search": "yes", "aiInput": "yes"}], "signalCount": 1},
+        "evidence": [],
+        "durationMs": 0
+      },
+      "webBotAuth": {"status": "neutral", "message": "Web Bot Auth directory not found (informational only)", "evidence": [], "durationMs": 59}
+    },
+    "discovery": {
+      "apiCatalog": {"status": "fail", "message": "API Catalog not found", "evidence": [], "durationMs": 138},
+      "oauthDiscovery": {"status": "pass", "message": "OpenID Connect discovery metadata found", "evidence": [], "durationMs": 62},
+      "oauthProtectedResource": {"status": "fail", "message": "No OAuth Protected Resource Metadata found", "evidence": [], "durationMs": 84},
+      "mcpServerCard": {"status": "fail", "message": "MCP Server Card not found", "evidence": [], "durationMs": 139},
+      "a2aAgentCard": {"status": "fail", "message": "A2A Agent Card not found", "evidence": [], "durationMs": 128},
+      "agentSkills": {"status": "fail", "message": "Agent Skills index not found", "evidence": [], "durationMs": 212},
+      "webMcp": {"status": "fail", "message": "No WebMCP tools detected on page load", "evidence": [], "durationMs": 4728}
+    },
+    "commerce": {
+      "x402": {"status": "neutral", "message": "x402 payment protocol not detected (not a commerce site)", "evidence": [], "durationMs": 1410},
+      "ucp": {"status": "neutral", "message": "UCP profile not found (not a commerce site)", "evidence": [], "durationMs": 135},
+      "acp": {"status": "neutral", "message": "ACP discovery document not found (not a commerce site)", "evidence": [], "durationMs": 176},
+      "ap2": {"status": "neutral", "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)", "evidence": []}
+    }
+  },
+  "nextLevel": {
+    "target": 3,
+    "name": "Agent-Readable",
+    "requirements": [
+      {
+        "check": "markdownNegotiation",
+        "description": "Support Accept: text/markdown content negotiation for machine-readable content",
+        "shortPrompt": "Enable Markdown for Agents so requests with Accept: text/markdown return a markdown version of your HTML.",
+        "specUrls": ["https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/"],
+        "prompt": "Implement content negotiation so requests with Accept: text/markdown return a markdown representation while HTML remains the default for browsers.",
+        "skillUrl": "https://isitagentready.com/.well-known/agent-skills/markdown-negotiation/SKILL.md"
+      }
+    ]
+  },
+  "isCommerce": false,
+  "commerceSignals": ["schema:Offer", "url:/product"]
+}

@@ -1,0 +1,46 @@
+# Example: gate agent-readiness on every Vercel preview deploy.
+#
+# Requires VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID repository secrets.
+
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.publish.outputs.url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Deploy to Vercel
+        id: publish
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm i -g vercel
+          url="$(vercel --token "$VERCEL_TOKEN" --yes)"
+          echo "url=$url" >>"$GITHUB_OUTPUT"
+
+  agent-readiness:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Agent Readiness
+        uses: lingzhong/agent-readiness-action@v0.1
+        with:
+          url: ${{ needs.deploy.outputs.url }}
+          min-level: 2
