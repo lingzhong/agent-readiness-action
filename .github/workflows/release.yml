@@ -15,10 +15,12 @@ jobs:
   draft:
     runs-on: ubuntu-latest
     steps:
+      # Use a PAT so a published release re-triggers downstream workflows
+      # (the default GITHUB_TOKEN does not fire on: release events).
       - name: Update release draft
         uses: release-drafter/release-drafter@563bf132657a13ded0b01fcb723c5a58cdd824e2 # v7.2.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          token: ${{ secrets.RELEASE_PAT }}
 
   # Maintain the floating major/minor tag (v0.1, eventually v1) on publish.
   # Runs only when a real release (not a draft) is published.
