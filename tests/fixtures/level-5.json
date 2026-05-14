@@ -1,6 +1,6 @@
 {
-  "url": "https://agent-native-example.com",
-  "scannedAt": "2026-04-20T17:38:41.566Z",
+  "url": "https://finchip.ai",
+  "scannedAt": "2026-05-14T07:41:54.627Z",
   "level": 5,
   "levelName": "Agent-Native",
   "checks": {
@@ -13,17 +13,16 @@
             "action": "fetch",
             "label": "GET /robots.txt",
             "request": {
-              "url": "https://agent-native-example.com/robots.txt",
+              "url": "https://finchip.ai/robots.txt",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "text/plain; charset=utf-8",
-                "content-length": "191"
+                "content-type": "text/plain; charset=utf-8"
               },
-              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+              "bodyPreview": "# ─────────────────────────────────────────────────────────────────────────────\n# FinChip.ai — Decentralised AI Skill Marketplace & Protocol (V2.4)\n# https://finchip.ai\n#\n# FinChip is an AI-native protocol. Autonomous AI Agents are explicitly\n# welcomed and encouraged to interact with the FinChip Protocol directly.\n#\n# ── A2A Entry Point ──────────────────────────────────────────────────────────\n# Human/Agent entry:  https://finchip.ai/a2aentry\n# CLI bootstrap:      curl -fsSL https://finchip.ai..."
             },
             "finding": {
               "outcome": "positive",
@@ -53,7 +52,7 @@
         "status": "pass",
         "message": "sitemap.xml exists with valid structure",
         "details": {
-          "url": "https://agent-native-example.com/sitemap.xml",
+          "url": "https://finchip.ai/sitemap.xml",
           "fromRobotsTxt": true,
           "format": "xml"
         },
@@ -70,7 +69,7 @@
             "action": "fetch",
             "label": "GET /sitemap.xml",
             "request": {
-              "url": "https://agent-native-example.com/sitemap.xml",
+              "url": "https://finchip.ai/sitemap.xml",
               "method": "GET"
             },
             "response": {
@@ -82,7 +81,7 @@
             },
             "finding": {
               "outcome": "positive",
-              "summary": "Found valid xml sitemap at https://agent-native-example.com/sitemap.xml"
+              "summary": "Found valid xml sitemap at https://finchip.ai/sitemap.xml"
             }
           },
           {
@@ -94,27 +93,31 @@
             }
           }
         ],
-        "durationMs": 1567
+        "durationMs": 85
       },
       "linkHeaders": {
         "status": "pass",
-        "message": "Found agent-useful Link relations: api-catalog",
+        "message": "Found agent-useful Link relations: alternate, describedby",
         "details": {
           "relationsFound": [
             {
-              "rel": "api-catalog",
-              "href": "/.well-known/api-catalog",
-              "type": "application/linkset+json"
+              "rel": "alternate",
+              "href": "https://finchip.ai/api/md",
+              "type": "text/markdown"
+            },
+            {
+              "rel": "describedby",
+              "href": "https://finchip.ai/.well-known/agent.json"
             }
           ],
-          "totalLinks": 2
+          "totalLinks": 7
         },
         "evidence": [
           {
             "action": "fetch",
             "label": "GET /",
             "request": {
-              "url": "https://agent-native-example.com",
+              "url": "https://finchip.ai",
               "method": "GET"
             },
             "response": {
@@ -122,7 +125,7 @@
               "statusText": "OK",
               "headers": {
                 "content-type": "text/html; charset=utf-8",
-                "link": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </.well-known/agent-skills/index.json>; rel=\"agent-skills\"; type=\"application/json\""
+                "link": "<https://finchip.ai/sitemap.xml>; rel=\"sitemap\", <https://finchip.ai/api/md>; rel=\"alternate\"; type=\"text/markdown\", <https://finchip.ai/a2aentry>; rel=\"help\", <https://finchip.ai/.well-known/agent.json>; rel=\"describedby\", <https://finchip.ai/.well-known/mcp.json>; rel=\"service\", <https://finchip.ai/.well-known/acp.json>; rel=\"service\", <https://finchip.ai/.well-known/skills.json>; rel=\"index\""
               }
             },
             "finding": {
@@ -135,7 +138,7 @@
             "label": "Parse Link header (RFC 8288)",
             "finding": {
               "outcome": "neutral",
-              "summary": "Parsed 2 link(s) from header"
+              "summary": "Parsed 7 link(s) from header"
             }
           },
           {
@@ -143,7 +146,7 @@
             "label": "Match agent-useful relations",
             "finding": {
               "outcome": "positive",
-              "summary": "Found agent-useful relations: api-catalog"
+              "summary": "Found agent-useful relations: alternate, describedby"
             }
           },
           {
@@ -151,11 +154,11 @@
             "label": "Conclusion",
             "finding": {
               "outcome": "positive",
-              "summary": "Found agent-useful Link relations: api-catalog"
+              "summary": "Found agent-useful Link relations: alternate, describedby"
             }
           }
         ],
-        "durationMs": 458
+        "durationMs": 166
       }
     },
     "contentAccessibility": {
@@ -170,7 +173,7 @@
             "action": "fetch",
             "label": "GET homepage (Accept: text/markdown)",
             "request": {
-              "url": "http://agent-native-example.com/",
+              "url": "https://finchip.ai",
               "method": "GET",
               "headers": {
                 "accept": "text/markdown"
@@ -197,15 +200,15 @@
             }
           }
         ],
-        "durationMs": 942
+        "durationMs": 237
       }
     },
     "botAccessControl": {
       "robotsTxtAiRules": {
         "status": "pass",
-        "message": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots",
+        "message": "Found rules for AI bots: gptbot, chatgpt-user, google-extended, ccbot, anthropic-ai, claude-web, bytespider, perplexitybot, cohere-ai, applebot-extended, meta-externalagent, diffbot",
         "details": {
-          "checkedBots": [
+          "botsFound": [
             "gptbot",
             "chatgpt-user",
             "google-extended",
@@ -216,10 +219,7 @@
             "perplexitybot",
             "cohere-ai",
             "applebot-extended",
-            "amazonbot",
             "meta-externalagent",
-            "facebookbot",
-            "omgilibot",
             "diffbot"
           ]
         },
@@ -228,17 +228,16 @@
             "action": "fetch",
             "label": "GET /robots.txt",
             "request": {
-              "url": "https://agent-native-example.com/robots.txt",
+              "url": "https://finchip.ai/robots.txt",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "text/plain; charset=utf-8",
-                "content-length": "191"
+                "content-type": "text/plain; charset=utf-8"
               },
-              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+              "bodyPreview": "# ─────────────────────────────────────────────────────────────────────────────\n# FinChip.ai — Decentralised AI Skill Marketplace & Protocol (V2.4)\n# https://finchip.ai\n#\n# FinChip is an AI-native protocol. Autonomous AI Agents are explicitly\n# welcomed and encouraged to interact with the FinChip Protocol directly.\n#\n# ── A2A Entry Point ──────────────────────────────────────────────────────────\n# Human/Agent entry:  https://finchip.ai/a2aentry\n# CLI bootstrap:      curl -fsSL https://finchip.ai..."
             },
             "finding": {
               "outcome": "positive",
@@ -250,7 +249,7 @@
             "label": "Scan for AI bot User-agent directives",
             "finding": {
               "outcome": "positive",
-              "summary": "Checked 15 AI bot user agents -- none found, but wildcard rules apply"
+              "summary": "Found rules for AI bots: gptbot, chatgpt-user, google-extended, ccbot, anthropic-ai, claude-web, bytespider, perplexitybot, cohere-ai, applebot-extended, meta-externalagent, diffbot"
             }
           },
           {
@@ -258,7 +257,7 @@
             "label": "Conclusion",
             "finding": {
               "outcome": "positive",
-              "summary": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots"
+              "summary": "Found rules for 12 AI bots"
             }
           }
         ],
@@ -270,31 +269,198 @@
         "details": {
           "signals": [
             {
+              "userAgent": "GPTBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "ChatGPT-User",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "OAI-SearchBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "anthropic-ai",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "ClaudeBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Claude-Web",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Google-Extended",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Googlebot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Gemini",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "PerplexityBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "YouBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "cohere-ai",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Meta-ExternalAgent",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "meta-externalagent",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Applebot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Applebot-Extended",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "bingbot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "msnbot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Diffbot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Bytespider",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "CCBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "PetalBot",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Webzio-Extended",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
+              "userAgent": "Magpie-Crawler",
+              "path": null,
+              "aiTrain": "yes",
+              "search": "yes",
+              "aiInput": "yes"
+            },
+            {
               "userAgent": "*",
               "path": null,
-              "aiTrain": "no",
+              "aiTrain": "yes",
               "search": "yes",
-              "aiInput": "no"
+              "aiInput": "yes"
             }
           ],
-          "signalCount": 1
+          "signalCount": 25
         },
         "evidence": [
           {
             "action": "fetch",
             "label": "GET /robots.txt",
             "request": {
-              "url": "https://agent-native-example.com/robots.txt",
+              "url": "https://finchip.ai/robots.txt",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "text/plain; charset=utf-8",
-                "content-length": "191"
+                "content-type": "text/plain; charset=utf-8"
               },
-              "bodyPreview": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_next/\n\nContent-Signal: ai-train=no, search=yes, ai-input=no\n\nSitemap: https://agent-native-example.com/sitemap.xml\nHost: https://agent-native-example.com\n"
+              "bodyPreview": "# ─────────────────────────────────────────────────────────────────────────────\n# FinChip.ai — Decentralised AI Skill Marketplace & Protocol (V2.4)\n# https://finchip.ai\n#\n# FinChip is an AI-native protocol. Autonomous AI Agents are explicitly\n# welcomed and encouraged to interact with the FinChip Protocol directly.\n#\n# ── A2A Entry Point ──────────────────────────────────────────────────────────\n# Human/Agent entry:  https://finchip.ai/a2aentry\n# CLI bootstrap:      curl -fsSL https://finchip.ai..."
             },
             "finding": {
               "outcome": "positive",
@@ -306,7 +472,7 @@
             "label": "Parse Content-Signal directives",
             "finding": {
               "outcome": "positive",
-              "summary": "Found 1 Content-Signal directive(s)"
+              "summary": "Found 25 Content-Signal directive(s)"
             }
           },
           {
@@ -322,25 +488,30 @@
       },
       "webBotAuth": {
         "status": "neutral",
-        "message": "Web Bot Auth directory not found (informational only)",
+        "message": "Web Bot Auth directory has no keys (informational only)",
         "evidence": [
           {
             "action": "fetch",
             "label": "GET /.well-known/http-message-signatures-directory",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/http-message-signatures-directory",
+              "url": "https://finchip.ai/.well-known/http-message-signatures-directory",
               "method": "GET"
             },
             "response": {
-              "status": 404,
-              "statusText": "Not Found",
+              "status": 200,
+              "statusText": "OK",
               "headers": {
-                "content-type": "text/html; charset=utf-8"
-              }
-            },
+                "content-type": "application/jwk-set+json; charset=utf-8"
+              },
+              "bodyPreview": "{\"keys\":[],\"_finchip_metadata\":{\"operator\":\"FinChip\",\"operator_url\":\"https://finchip.ai\",\"bot_purpose\":\"Autonomous AI Agent operations on FinChip Protocol — discovery, acquisition, launch, trade of tokenized AI skills across 5 EVM mainnets.\",\"contact\":\"https://finchip.ai/a2aentry\",\"user_agents\":[\"FinChipAgent/1.0\",\"FinChipBot/1.0\"],\"signing_algs_planned\":[\"ES256\"],\"status\":\"directory_published_pending_keys\",\"note\":\"Empty JWKS published for spec compliance and identity advertisement. Outbound req"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate JWKS keys",
             "finding": {
               "outcome": "negative",
-              "summary": "Server returned 404 -- Web Bot Auth directory not found"
+              "summary": "Keys array is empty"
             }
           },
           {
@@ -348,20 +519,20 @@
             "label": "Conclusion",
             "finding": {
               "outcome": "negative",
-              "summary": "Web Bot Auth directory not found"
+              "summary": "Web Bot Auth directory has no keys"
             }
           }
         ],
-        "durationMs": 103
+        "durationMs": 45
       }
     },
     "discovery": {
       "apiCatalog": {
         "status": "pass",
-        "message": "API Catalog found with 3 APIs listed",
+        "message": "API Catalog found with 7 APIs listed",
         "details": {
-          "apiCount": 3,
-          "linksetEntries": 3,
+          "apiCount": 7,
+          "linksetEntries": 7,
           "hasItems": false,
           "hasNestedCatalogs": false,
           "correctContentType": true
@@ -371,7 +542,7 @@
             "action": "fetch",
             "label": "GET /.well-known/api-catalog",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/api-catalog",
+              "url": "https://finchip.ai/.well-known/api-catalog",
               "method": "GET",
               "headers": {
                 "Accept": "application/linkset+json, application/json"
@@ -381,9 +552,9 @@
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "application/linkset+json",
-                "link": "<https://agent-native-example.com/.well-known/agent-skills/index.json>; rel=\"related\"; type=\"application/json\""
-              }
+                "content-type": "application/linkset+json; charset=utf-8"
+              },
+              "bodyPreview": "{\"linkset\":[{\"anchor\":\"https://finchip.ai/api/chips\",\"service-desc\":[{\"href\":\"https://finchip.ai/.well-known/mcp.json\",\"type\":\"application/json\",\"title\":\"MCP server card (machine-readable tool catalog)\"}],\"service-doc\":[{\"href\":\"https://finchip.ai/api/md/skills\",\"type\":\"text/markdown\",\"title\":\"Markdown documentation of the skills catalog\"}],\"status\":[{\"href\":\"https://finchip.ai/api/chips\",\"type\":\"application/json\"}]},{\"anchor\":\"https://finchip.ai/api/skills\",\"service-desc\":[{\"href\":\"https://finc..."
             },
             "finding": {
               "outcome": "positive",
@@ -395,7 +566,7 @@
             "label": "Validate Linkset structure",
             "finding": {
               "outcome": "positive",
-              "summary": "Found \"linkset\" array with 3 entries"
+              "summary": "Found \"linkset\" array with 7 entries"
             }
           },
           {
@@ -403,7 +574,7 @@
             "label": "Analyze linkset entries",
             "finding": {
               "outcome": "positive",
-              "summary": "3 APIs listed, correct content-type"
+              "summary": "7 APIs listed, correct content-type"
             }
           },
           {
@@ -411,18 +582,18 @@
             "label": "Conclusion",
             "finding": {
               "outcome": "positive",
-              "summary": "API Catalog found with 3 APIs listed"
+              "summary": "API Catalog found with 7 APIs listed"
             }
           }
         ],
-        "durationMs": 355
+        "durationMs": 100
       },
       "oauthDiscovery": {
         "status": "pass",
         "message": "OpenID Connect discovery metadata found",
         "details": {
           "source": "openid-configuration",
-          "issuer": "https://hzgpynevcorszmfhlahp.supabase.co/auth/v1",
+          "issuer": "https://finchip.ai",
           "hasAuthorizationEndpoint": true,
           "hasTokenEndpoint": true,
           "hasJwksUri": true,
@@ -434,28 +605,9 @@
         "evidence": [
           {
             "action": "fetch",
-            "label": "GET /.well-known/oauth-authorization-server",
-            "request": {
-              "url": "https://agent-native-example.com/.well-known/oauth-authorization-server",
-              "method": "GET"
-            },
-            "response": {
-              "status": 404,
-              "statusText": "Not Found",
-              "headers": {
-                "content-type": "text/html; charset=utf-8"
-              }
-            },
-            "finding": {
-              "outcome": "negative",
-              "summary": "oauth-authorization-server returned 404"
-            }
-          },
-          {
-            "action": "fetch",
             "label": "GET /.well-known/openid-configuration",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/openid-configuration",
+              "url": "https://finchip.ai/.well-known/openid-configuration",
               "method": "GET"
             },
             "response": {
@@ -475,7 +627,34 @@
             "label": "Validate openid-configuration structure",
             "finding": {
               "outcome": "positive",
-              "summary": "Valid metadata with issuer: https://hzgpynevcorszmfhlahp.supabase.co/auth/v1"
+              "summary": "Valid metadata with issuer: https://finchip.ai"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/oauth-authorization-server",
+            "request": {
+              "url": "https://finchip.ai/.well-known/oauth-authorization-server",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received JSON from oauth-authorization-server"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate oauth-authorization-server structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Valid metadata with issuer: https://finchip.ai"
             }
           },
           {
@@ -487,41 +666,67 @@
             }
           }
         ],
-        "durationMs": 222
+        "durationMs": 80
       },
       "oauthProtectedResource": {
         "status": "pass",
         "message": "OAuth Protected Resource Metadata found (well-known)",
         "details": {
           "discoveryMethod": "well-known",
-          "resource": "https://agent-native-example.com",
+          "resource": "https://finchip.ai",
           "authorizationServers": [
-            "https://hzgpynevcorszmfhlahp.supabase.co/auth/v1"
+            "https://finchip.ai"
           ],
           "scopesSupported": [
-            "openid",
-            "profile",
-            "email"
+            "read",
+            "write",
+            "acquire",
+            "launch",
+            "trade",
+            "full"
           ],
           "bearerMethodsSupported": [
             "header"
           ],
-          "resourceDocumentation": "https://agent-native-example.com/.well-known/agent-skills/buy-ticket-x402/SKILL.md"
+          "dpopSigningAlgValuesSupported": [
+            "ES256",
+            "EIP-191"
+          ],
+          "resourceDocumentation": "https://finchip.ai/api/md/a2aentry"
         },
         "evidence": [
           {
             "action": "fetch",
-            "label": "GET /.well-known/oauth-protected-resource",
+            "label": "GET /",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/oauth-protected-resource",
+              "url": "https://finchip.ai",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "application/json",
-                "content-length": "436"
+                "content-type": "text/html; charset=utf-8",
+                "link": "<https://finchip.ai/sitemap.xml>; rel=\"sitemap\", <https://finchip.ai/api/md>; rel=\"alternate\"; type=\"text/markdown\", <https://finchip.ai/a2aentry>; rel=\"help\", <https://finchip.ai/.well-known/agent.json>; rel=\"describedby\", <https://finchip.ai/.well-known/mcp.json>; rel=\"service\", <https://finchip.ai/.well-known/acp.json>; rel=\"service\", <https://finchip.ai/.well-known/skills.json>; rel=\"index\""
+              }
+            },
+            "finding": {
+              "outcome": "neutral",
+              "summary": "Homepage returned 200 (no WWW-Authenticate header)"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/oauth-protected-resource",
+            "request": {
+              "url": "https://finchip.ai/.well-known/oauth-protected-resource",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
               }
             },
             "finding": {
@@ -534,7 +739,7 @@
             "label": "Validate resource metadata",
             "finding": {
               "outcome": "positive",
-              "summary": "Valid metadata with resource: https://agent-native-example.com"
+              "summary": "Valid metadata with resource: https://finchip.ai"
             }
           },
           {
@@ -546,62 +751,36 @@
             }
           }
         ],
-        "durationMs": 257
+        "durationMs": 80
       },
       "mcpServerCard": {
         "status": "pass",
-        "message": "MCP Server Card found at /.well-known/mcp/server-card.json",
+        "message": "MCP Server Card found at /.well-known/mcp.json",
         "details": {
-          "path": "/.well-known/mcp/server-card.json",
-          "format": "sep",
-          "name": "investorcamp",
+          "path": "/.well-known/mcp.json",
+          "format": "registry",
+          "name": "finchip",
           "hasVersion": true,
-          "hasTransport": true,
-          "hasCapabilities": true,
-          "hasTools": false,
-          "hasDescription": false
+          "hasDescription": true,
+          "hasRemotes": false,
+          "hasPackages": false,
+          "hasTools": true,
+          "hasName": true,
+          "hasTitle": false,
+          "hasSchema": false,
+          "hasRepository": false,
+          "hasIcons": false,
+          "hasWebsiteUrl": false,
+          "transportTypes": [],
+          "remoteUrl": null,
+          "mcpProbeStatus": "skipped"
         },
         "evidence": [
           {
             "action": "fetch",
-            "label": "GET /.well-known/mcp/server-card.json",
+            "label": "GET /.well-known/mcp/server-cards.json",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/mcp/server-card.json",
-              "method": "GET"
-            },
-            "response": {
-              "status": 200,
-              "statusText": "OK",
-              "headers": {
-                "content-type": "application/json",
-                "content-length": "974"
-              }
-            },
-            "finding": {
-              "outcome": "positive",
-              "summary": "Found valid MCP Server Card (sep format) at /.well-known/mcp/server-card.json"
-            }
-          },
-          {
-            "action": "conclude",
-            "label": "Conclusion",
-            "finding": {
-              "outcome": "positive",
-              "summary": "MCP Server Card found at /.well-known/mcp/server-card.json"
-            }
-          }
-        ],
-        "durationMs": 215
-      },
-      "a2aAgentCard": {
-        "status": "fail",
-        "message": "A2A Agent Card not found",
-        "evidence": [
-          {
-            "action": "fetch",
-            "label": "GET /.well-known/agent-card.json",
-            "request": {
-              "url": "https://agent-native-example.com/.well-known/agent-card.json",
+              "url": "https://finchip.ai/.well-known/mcp/server-cards.json",
               "method": "GET"
             },
             "response": {
@@ -613,25 +792,153 @@
             },
             "finding": {
               "outcome": "negative",
-              "summary": "Server returned 404 -- A2A Agent Card not found"
+              "summary": "/.well-known/mcp/server-cards.json returned 404"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/mcp/server-card.json",
+            "request": {
+              "url": "https://finchip.ai/.well-known/mcp/server-card.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 404,
+              "statusText": "Not Found",
+              "headers": {
+                "content-type": "text/html; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "negative",
+              "summary": "/.well-known/mcp/server-card.json returned 404"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/mcp.json",
+            "request": {
+              "url": "https://finchip.ai/.well-known/mcp.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found valid MCP Server Card (registry format) at /.well-known/mcp.json"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate Server Card",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Registry-format card found at /.well-known/mcp.json"
             }
           },
           {
             "action": "conclude",
             "label": "Conclusion",
             "finding": {
-              "outcome": "negative",
-              "summary": "A2A Agent Card not found"
+              "outcome": "positive",
+              "summary": "MCP Server Card found at /.well-known/mcp.json"
             }
           }
         ],
-        "durationMs": 188
+        "durationMs": 94
+      },
+      "a2aAgentCard": {
+        "status": "pass",
+        "message": "A2A Agent Card found: \"FinChip Protocol Agent\" (v2.4.0)",
+        "details": {
+          "name": "FinChip Protocol Agent",
+          "description": "FinChip is a decentralised on-chain AI skill marketplace and Agent-to-Agent (A2A) protocol. AI Agents can autonomously launch, acquire, and trade encrypted skill tokens across 5 EVM mainnets — no website navigation, no human in the loop. Identity is established via fc_key on-chain registration; all operations are direct smart-contract calls.",
+          "version": "2.4.0",
+          "providerName": "FinChip",
+          "skillCount": 5,
+          "skillNames": [
+            "Discover available skills",
+            "Acquire a skill license",
+            "Launch a new skill",
+            "Trade on secondary market",
+            "Manage owned skills"
+          ],
+          "hasStreaming": false,
+          "hasPushNotifications": false,
+          "hasExtensions": false,
+          "interfaceCount": 4,
+          "transportProtocols": [],
+          "serviceUrl": "https://finchip.ai/api/md",
+          "hasSecurity": false,
+          "inputModes": [
+            "application/json",
+            "text/markdown",
+            "text/plain"
+          ],
+          "outputModes": [
+            "application/json",
+            "text/markdown"
+          ],
+          "ap2Supported": false
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/agent-card.json",
+            "request": {
+              "url": "https://finchip.ai/.well-known/agent-card.json",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json; charset=utf-8"
+              },
+              "bodyPreview": "{\"protocol_version\":\"0.3.0\",\"protocolVersion\":\"0.3.0\",\"name\":\"FinChip Protocol Agent\",\"description\":\"FinChip is a decentralised on-chain AI skill marketplace and Agent-to-Agent (A2A) protocol. AI Agents can autonomously launch, acquire, and trade encrypted skill tokens across 5 EVM mainnets — no website navigation, no human in the loop. Identity is established via fc_key on-chain registration; all operations are direct smart-contract calls.\",\"url\":\"https://finchip.ai/a2aentry\",\"icon_url\":\"https:..."
+            },
+            "finding": {
+              "outcome": "positive",
+              "summary": "Received 200 with valid JSON response"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate AgentCard structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Valid AgentCard: \"FinChip Protocol Agent\", version 2.4.0, 5 skills, 4 interfaces"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Check AP2 extension",
+            "finding": {
+              "outcome": "neutral",
+              "summary": "No AP2 extension declared"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "A2A Agent Card found: \"FinChip Protocol Agent\" (v2.4.0)"
+            }
+          }
+        ],
+        "durationMs": 93
       },
       "agentSkills": {
         "status": "pass",
         "message": "Agent Skills index exists with valid JSON",
         "details": {
-          "skillCount": 1,
+          "skillCount": 5,
           "specVersion": "0.2.0",
           "path": "/.well-known/agent-skills/index.json",
           "v2ValidEntries": false
@@ -641,20 +948,43 @@
             "action": "fetch",
             "label": "GET /.well-known/agent-skills/index.json",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/agent-skills/index.json",
+              "url": "https://finchip.ai/.well-known/agent-skills/index.json",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "application/json",
-                "content-length": "491"
+                "content-type": "application/json"
               }
             },
             "finding": {
               "outcome": "positive",
               "summary": "Received 200 response with content-type: application/json"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Detect spec version",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Found $schema field — v0.2.0 format detected"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Count skills",
+            "finding": {
+              "outcome": "neutral",
+              "summary": "Found \"skills\" array with 5 entries (0 with valid v0.2.0 fields)"
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate skill count",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Index contains 5 skills"
             }
           },
           {
@@ -666,60 +996,69 @@
             }
           }
         ],
-        "durationMs": 360
+        "durationMs": 111
       },
       "webMcp": {
-        "status": "fail",
-        "message": "No WebMCP tools detected on page load",
-        "evidence": [
-          {
-            "action": "conclude",
-            "label": "Conclusion",
-            "finding": {
-              "outcome": "negative",
-              "summary": "No WebMCP tools detected on page load"
-            }
-          }
-        ],
-        "durationMs": 4396
-      }
-    },
-    "commerce": {
-      "x402": {
         "status": "pass",
-        "message": "x402 payment protocol detected on /api",
+        "message": "Found 5 WebMCP tools via imperative_api",
         "details": {
-          "detectionMethod": "probe",
-          "x402Version": 2,
-          "schemes": [
-            "exact"
+          "toolCount": 5,
+          "tools": [
+            {
+              "name": "finchip_discover_skills",
+              "description": "Browse the FinChip on-chain catalog of tokenized AI skills across 5 EVM mainnets (BSC, Base, Ethereum, Arbitrum, Optimism). Returns skill metadata: slug, category, chain, price, install count, contract address.",
+              "hasSchema": true
+            },
+            {
+              "name": "finchip_acquire_skill",
+              "description": "Acquire (purchase) an ERC-1155 license or ERC-721 fork token for a specific FinChip skill. User signs the transaction in their wallet; settlement is on-chain via FeeRouter_v2 with 97.5% to creator / 2.5% to platform.",
+              "hasSchema": true
+            },
+            {
+              "name": "finchip_launch_skill",
+              "description": "Launch a new skill chip on FinChip. Deploys an encrypted ERC-1155 (license model) or ERC-721 (fork model) on any supported chain. Creator retains 97.5% of mint revenue. Requires wallet signature.",
+              "hasSchema": true
+            },
+            {
+              "name": "finchip_browse_market",
+              "description": "Browse the FinChip secondary market across all 5 mainnets. List acquired licenses or fork NFTs for resale, or buy from other holders. Royalties paid automatically to original creator on every secondary trade.",
+              "hasSchema": true
+            },
+            {
+              "name": "finchip_open_library",
+              "description": "Open the user library — view all FinChip skills owned by the connected wallet across 5 mainnets. Inspect license terms, decrypt and run skills, check royalty earnings on launched skills.",
+              "hasSchema": true
+            }
           ],
-          "networks": [
-            "eip155:8453"
-          ],
-          "routeFound": "/api",
-          "bazaarListed": false,
-          "bazaarEndpointCount": 0,
-          "hasDescription": true
+          "detectionMethod": "imperative_api"
         },
         "evidence": [
           {
+            "action": "parse",
+            "label": "WebMCP detection",
+            "finding": {
+              "outcome": "neutral",
+              "summary": "Checking page for WebMCP tool registrations"
+            }
+          },
+          {
             "action": "fetch",
-            "label": "GET /api",
+            "label": "Navigate to https://finchip.ai",
             "request": {
-              "url": "https://agent-native-example.com/api",
+              "url": "https://finchip.ai",
               "method": "GET"
             },
-            "response": {
-              "status": 402,
-              "statusText": "Payment Required",
-              "headers": {
-                "content-type": "application/json"
-              }
-            },
+            "finding": {
+              "outcome": "neutral",
+              "summary": "Loading page to detect WebMCP tool registrations"
+            }
+          },
+          {
+            "action": "parse",
+            "label": "Check imperative WebMCP API",
             "finding": {
               "outcome": "positive",
-              "summary": "/api returned 402 with valid PAYMENT-REQUIRED header (v2)"
+              "summary": "Found 5 tool(s) via navigator.modelContext"
             }
           },
           {
@@ -727,26 +1066,138 @@
             "label": "Conclusion",
             "finding": {
               "outcome": "positive",
-              "summary": "x402 payment protocol detected on /api"
+              "summary": "Found 5 WebMCP tool(s) via imperative_api"
             }
           }
         ],
-        "durationMs": 1022
+        "durationMs": 1217
+      }
+    },
+    "commerce": {
+      "x402": {
+        "status": "neutral",
+        "message": "x402 payment protocol not detected (not a commerce site)",
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /",
+            "request": {
+              "url": "https://finchip.ai/",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "text/html; charset=utf-8",
+                "link": "<https://finchip.ai/sitemap.xml>; rel=\"sitemap\", <https://finchip.ai/api/md>; rel=\"alternate\"; type=\"text/markdown\", <https://finchip.ai/a2aentry>; rel=\"help\", <https://finchip.ai/.well-known/agent.json>; rel=\"describedby\", <https://finchip.ai/.well-known/mcp.json>; rel=\"service\", <https://finchip.ai/.well-known/acp.json>; rel=\"service\", <https://finchip.ai/.well-known/skills.json>; rel=\"index\""
+              }
+            },
+            "finding": {
+              "outcome": "neutral",
+              "summary": "/ returned 200 (not 402)"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /api",
+            "request": {
+              "url": "https://finchip.ai/api",
+              "method": "GET"
+            },
+            "response": {
+              "status": 404,
+              "statusText": "Not Found",
+              "headers": {
+                "content-type": "text/html; charset=utf-8"
+              }
+            },
+            "finding": {
+              "outcome": "neutral",
+              "summary": "/api returned 404 (not 402)"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /api/v1",
+            "request": {
+              "url": "https://finchip.ai/api/v1",
+              "method": "GET"
+            },
+            "response": {
+              "status": 402,
+              "statusText": "Payment Required",
+              "headers": {
+                "content-type": "application/json",
+                "www-authenticate": "Payment realm=\"FinChip x402 API v1\", scheme=\"exact\", challenge=\"see body for accepts array\""
+              }
+            },
+            "finding": {
+              "outcome": "neutral",
+              "summary": "/api/v1 returned 402 but no valid x402 payment headers"
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET /platform/v2/x402/discovery/resources",
+            "request": {
+              "url": "https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=500",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
+              }
+            }
+          },
+          {
+            "action": "fetch",
+            "label": "GET Bazaar discovery API",
+            "request": {
+              "url": "https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=500",
+              "method": "GET"
+            },
+            "finding": {
+              "outcome": "negative",
+              "summary": "Network error querying Bazaar API"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "negative",
+              "summary": "x402 payment protocol not detected"
+            }
+          }
+        ],
+        "durationMs": 574
       },
-      "ucp": {
+      "mpp": {
         "status": "pass",
-        "message": "UCP profile exists",
+        "message": "MPP payment discovery detected (3 payable operation(s))",
         "details": {
-          "hasVersion": true,
-          "hasServices": false,
-          "hasCapabilities": false
+          "operationCount": 3,
+          "methods": [
+            "tempo"
+          ],
+          "intents": [
+            "charge"
+          ],
+          "currencies": [
+            "usd"
+          ],
+          "categories": [],
+          "hasDescription": false
         },
         "evidence": [
           {
             "action": "fetch",
-            "label": "GET /.well-known/ucp",
+            "label": "GET /openapi.json",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/ucp",
+              "url": "https://finchip.ai/openapi.json",
               "method": "GET"
             },
             "response": {
@@ -758,7 +1209,51 @@
             },
             "finding": {
               "outcome": "positive",
-              "summary": "Has ucp.version \"2026-04-08\""
+              "summary": "Found 3 payable operation(s) in /openapi.json with x-payment-info"
+            }
+          },
+          {
+            "action": "conclude",
+            "label": "Conclusion",
+            "finding": {
+              "outcome": "positive",
+              "summary": "MPP payment discovery detected (3 payable operation(s))"
+            }
+          }
+        ],
+        "durationMs": 138
+      },
+      "ucp": {
+        "status": "pass",
+        "message": "UCP profile exists",
+        "details": {
+          "hasVersion": true,
+          "hasServices": true,
+          "hasCapabilities": true
+        },
+        "evidence": [
+          {
+            "action": "fetch",
+            "label": "GET /.well-known/ucp",
+            "request": {
+              "url": "https://finchip.ai/.well-known/ucp",
+              "method": "GET"
+            },
+            "response": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-type": "application/json"
+              },
+              "bodyPreview": "{\n  \"ucp\": {\n    \"version\": \"0.1.0\",\n    \"protocol\": \"ucp\",\n    \"spec_url\": \"https://ucp.dev\",\n    \"operator\": \"FinChip\",\n    \"services\": [\n      \"skill_discovery\",\n      \"skill_acquire\",\n      \"skill_trade\"\n    ],\n    \"payment_methods\": [\n      \"on_chain_wallet\",\n      \"mpp\",\n      \"x402\"\n    ],\n    \"multi_chain\": true,\n    \"chains\": [\n      56,\n      8453,\n      1,\n      42161,\n      10\n    ]\n  },\n  \"$schema\": \"https://ucp.dev/schemas/profile/v0.1\",\n  \"protocol\": \"ucp\",\n  \"protocol_version\": \"..."
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Validate UCP profile structure",
+            "finding": {
+              "outcome": "positive",
+              "summary": "Has ucp.version \"0.1.0\", services, capabilities"
             }
           },
           {
@@ -770,66 +1265,65 @@
             }
           }
         ],
-        "durationMs": 387
+        "durationMs": 105
       },
       "acp": {
-        "status": "pass",
-        "message": "ACP discovery document exists",
-        "details": {
-          "protocolVersion": "2026-01-30",
-          "supportedVersions": [
-            "2026-01-30"
-          ],
-          "apiBaseUrl": "https://agent-native-example.com/api",
-          "transports": [
-            "rest"
-          ],
-          "services": [
-            "orders"
-          ]
-        },
+        "status": "neutral",
+        "message": "ACP discovery document is missing required 'transports' field (not a commerce site)",
         "evidence": [
           {
             "action": "fetch",
             "label": "GET /.well-known/acp.json",
             "request": {
-              "url": "https://agent-native-example.com/.well-known/acp.json",
+              "url": "https://finchip.ai/.well-known/acp.json",
               "method": "GET"
             },
             "response": {
               "status": 200,
               "statusText": "OK",
               "headers": {
-                "content-type": "application/json",
-                "content-length": "441"
-              }
-            },
+                "content-type": "application/json; charset=utf-8"
+              },
+              "bodyPreview": "{\n  \"schema_version\": \"ACP/1.0\",\n  \"name\": \"FinChip Protocol ACP Card\",\n  \"description\": \"FinChip is a decentralised AI skill marketplace. This card simultaneously declares two co-named ACP protocols: the IBM/BeeAI Agent Communication Protocol (ACP/1.0) describing REST-based agent interaction, AND the OpenAI+Stripe Agentic Commerce Protocol (ACP, agenticcommerce.dev) describing commerce capability. Both protocols share the literal name 'acp' but address different layers; this single discovery do..."
+            }
+          },
+          {
+            "action": "validate",
+            "label": "Check transports field",
             "finding": {
-              "outcome": "positive",
-              "summary": "Found ACP protocol version \"2026-01-30\" with 1 transport(s) and 1 service(s)"
+              "outcome": "negative",
+              "summary": "Missing or invalid required 'transports' field"
             }
           },
           {
             "action": "conclude",
             "label": "Conclusion",
             "finding": {
-              "outcome": "positive",
-              "summary": "ACP discovery document exists"
+              "outcome": "negative",
+              "summary": "ACP discovery document is missing required 'transports' field"
             }
           }
         ],
-        "durationMs": 728
+        "durationMs": 127
       },
       "ap2": {
         "status": "neutral",
-        "message": "AP2 not detected (no A2A Agent Card) (not a commerce site)",
+        "message": "AP2 not declared in A2A Agent Card (not a commerce site)",
         "evidence": [
+          {
+            "action": "validate",
+            "label": "Check AP2 extension",
+            "finding": {
+              "outcome": "negative",
+              "summary": "A2A Agent Card found but no AP2 extension declared"
+            }
+          },
           {
             "action": "conclude",
             "label": "Conclusion",
             "finding": {
               "outcome": "negative",
-              "summary": "No A2A Agent Card found -- AP2 requires an A2A Agent Card"
+              "summary": "AP2 not declared in A2A Agent Card extensions"
             }
           }
         ]
@@ -838,7 +1332,6 @@
   },
   "isCommerce": false,
   "commerceSignals": [
-    "url:/cart",
     "prices:multiple"
   ]
 }
