@@ -20,13 +20,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Check tooling
         run: |
           command -v curl
           command -v jq
           command -v python3
+          bash --version | head -1
 
       - name: Run test suite
         run: bash tests/test.sh
