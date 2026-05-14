@@ -1,0 +1,58 @@
+name: tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v0.1.2)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - name: Validate version
+        run: |
+          set -euo pipefail
+          if ! [[ "$VERSION" =~ ^v0\.[0-9]+\.[0-9]+$ || "$VERSION" =~ ^v[1-9][0-9]*\.[0-9]+\.[0-9]+$ ]]; then
+            echo "version $VERSION is not a semver release (expected vX.Y.Z)"
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # Prereq: TAG_SIGNING_SSH_KEY is an OpenSSH private key whose public
+      # counterpart is registered as a Signing Key on the GitHub account
+      # matching user.email below. Without that registration GitHub will
+      # render the resulting tag as "Unverified".
+      - name: Configure SSH tag signing
+        env:
+          TAG_SIGNING_SSH_KEY: ${{ secrets.TAG_SIGNING_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          umask 077
+          printf '%s\n' "$TAG_SIGNING_SSH_KEY" > "$HOME/.ssh/signing_key"
+          ssh-keygen -y -f "$HOME/.ssh/signing_key" > "$HOME/.ssh/signing_key.pub"
+          git config user.name "Ling Zhong"
+          git config user.email "lingzhong@users.noreply.github.com"
+          git config gpg.format ssh
+          git config user.signingkey "$HOME/.ssh/signing_key.pub"
+
+      - name: Create and push signed tag
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --tags origin "refs/tags/$VERSION" >/dev/null 2>&1; then
+            echo "tag $VERSION already exists on origin"
+            exit 1
+          fi
+          git tag -s -a "$VERSION" -m "Release $VERSION"
+          git push origin "$VERSION"

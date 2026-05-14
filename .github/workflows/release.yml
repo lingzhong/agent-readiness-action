@@ -33,6 +33,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      # See .github/workflows/tag.yml for the signing-key prerequisites.
+      - name: Configure SSH tag signing
+        env:
+          TAG_SIGNING_SSH_KEY: ${{ secrets.TAG_SIGNING_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          umask 077
+          printf '%s\n' "$TAG_SIGNING_SSH_KEY" > "$HOME/.ssh/signing_key"
+          ssh-keygen -y -f "$HOME/.ssh/signing_key" > "$HOME/.ssh/signing_key.pub"
+          git config user.name "Ling Zhong"
+          git config user.email "lingzhong@users.noreply.github.com"
+          git config gpg.format ssh
+          git config user.signingkey "$HOME/.ssh/signing_key.pub"
+
       - name: Update floating major/minor tag
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,5 +64,5 @@ jobs:
             echo "tag $tag is not a semver release; skipping"
             exit 0
           fi
-          git tag -f "$floating" "$tag"
+          git tag -s -a -f "$floating" "$tag" -m "Floating tag for $tag"
           git push origin "$floating" --force
