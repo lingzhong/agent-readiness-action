@@ -56,6 +56,18 @@ outputs:
   response:
     description: 'Raw scanner JSON response (truncated if very large).'
     value: ${{ steps.check.outputs.response }}
+  checks-passed:
+    description: 'Number of individual checks the scanner reported as passing. Empty if the scan did not return a checks tree.'
+    value: ${{ steps.check.outputs.checks-passed }}
+  checks-failed:
+    description: 'Number of individual checks the scanner reported as failing. Empty if the scan did not return a checks tree.'
+    value: ${{ steps.check.outputs.checks-failed }}
+  checks-neutral:
+    description: 'Number of not-applicable (neutral) checks, e.g. commerce protocols on a non-commerce site. Empty if the scan did not return a checks tree.'
+    value: ${{ steps.check.outputs.checks-neutral }}
+  checks-pass-ratio:
+    description: 'Lighthouse-style pass ratio as "passed/applicable", where applicable = passed + failed (neutral excluded). Empty if the scan did not return a checks tree.'
+    value: ${{ steps.check.outputs.checks-pass-ratio }}
 
 runs:
   using: composite

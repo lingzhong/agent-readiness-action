@@ -160,6 +160,8 @@ run_case "level-0-passes-at-min-0" 0 \
   "passed=true"
 
 # 4b. Level 3 synthesized fixture passes at min 3 and surfaces levelName.
+# Also asserts the Lighthouse-style check summary outputs: the level-3 fixture
+# has 6 pass / 7 fail / 5 neutral, so the ratio (neutral excluded) is 6/13.
 run_case "level-3-passes-at-min-3" 0 \
   "INPUT_URL=http://127.0.0.1:${PORT}/target#level=3" \
   "INPUT_MIN_LEVEL=3" \
@@ -168,7 +170,11 @@ run_case "level-3-passes-at-min-3" 0 \
   -- \
   "passed=true" \
   "level=3" \
-  "Agent-Readable"
+  "Agent-Readable" \
+  "checks-passed=6" \
+  "checks-failed=7" \
+  "checks-neutral=5" \
+  "checks-pass-ratio=6/13"
 
 # 4c. Level 4 real-world lingzhong capture — shape-regression guard. If the
 # scanner changes its response schema, this test flags it before users hit
@@ -184,6 +190,7 @@ run_case "level-4-real-capture-shape" 0 \
   "Agent-Integrated"
 
 # 4d. Level 5 real-world Agent-Native capture — shape-regression guard.
+# 15 pass / 0 fail / 4 neutral -> all applicable checks pass, ratio 15/15.
 run_case "level-5-passes-at-min-5" 0 \
   "INPUT_URL=http://127.0.0.1:${PORT}/target#level=5" \
   "INPUT_MIN_LEVEL=5" \
@@ -192,7 +199,8 @@ run_case "level-5-passes-at-min-5" 0 \
   -- \
   "passed=true" \
   "level=5" \
-  "Agent-Native"
+  "Agent-Native" \
+  "checks-pass-ratio=15/15"
 
 # 4e. Level 4 at min 5 -> fail with nextLevel guidance toward Agent-Native.
 run_case "level-4-fails-at-min-5" 1 \
@@ -206,13 +214,15 @@ run_case "level-4-fails-at-min-5" 1 \
   "Agent-Integrated" \
   "oauthProtectedResource"
 
-# 5. Malformed scanner response, default (soft-fail) -> exit 0 with warn
+# 5. Malformed scanner response, default (soft-fail) -> exit 0 with warn.
+# No checks tree available, so the summary outputs are emitted but empty.
 run_case "malformed-soft-fails" 0 \
   "INPUT_URL=http://127.0.0.1:${PORT}/target#malformed" \
   "INPUT_SCANNER_ENDPOINT=${ENDPOINT}" \
   "INPUT_WAIT_FOR_URL=false" \
   -- \
-  "passed=false"
+  "passed=false" \
+  "checks-pass-ratio="
 
 # 6. Malformed scanner response, strict -> exit 1
 run_case "malformed-hard-fails-when-strict" 1 \

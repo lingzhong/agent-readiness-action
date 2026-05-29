@@ -147,6 +147,18 @@ re-implement it.
 | `level` | integer or empty | Parsed level from scanner; empty if the scan didn't complete. |
 | `passed` | `'true'` / `'false'` | Whether the gate passed. |
 | `response` | JSON string | Raw scanner response (truncated at ~900 KB to stay under GitHub's step-output limit). |
+| `checks-passed` | integer or empty | Count of individual checks the scanner reported as passing. Empty if no `checks` tree was returned. |
+| `checks-failed` | integer or empty | Count of individual checks reported as failing. Empty if no `checks` tree was returned. |
+| `checks-neutral` | integer or empty | Count of not-applicable (neutral) checks, e.g. commerce protocols on a non-commerce site. Empty if no `checks` tree was returned. |
+| `checks-pass-ratio` | string or empty | Lighthouse-style pass ratio `passed/applicable` (applicable = passed + failed; neutral excluded). Empty if no `checks` tree was returned. |
+
+These check outputs are informational and **do not affect the gate** — the
+pass/fail decision is driven solely by `level` vs `min-level`. They expose the
+scanner's per-check breakdown (the same data available in `response`) as a
+[Lighthouse-style](https://developer.chrome.com/docs/lighthouse/agentic-browsing/scoring)
+pass ratio for badging or finer-grained reporting. Not-applicable (neutral)
+checks are excluded from the ratio denominator so a site isn't penalized for
+categories that don't apply to it.
 
 ## Failure semantics (one rule)
 

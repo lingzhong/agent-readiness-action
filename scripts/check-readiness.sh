@@ -121,6 +121,31 @@ truncate_for_output() {
   fi
 }
 
+# Derive a Lighthouse-style pass-ratio from the scanner's structured `checks`
+# tree, independent of the 0-5 level gate. Neutral (not-applicable) checks —
+# e.g. commerce protocols on a non-commerce site — are excluded from the ratio
+# denominator so a site is not penalised for categories that don't apply.
+# Walks the checks subtree recursively so it is robust to nesting-depth changes.
+# Emits empty values when there is no checks tree (or the scan did not
+# complete) so the outputs are always defined for consumers.
+emit_check_summary() {
+  local resp="${1:-}"
+  local c_pass="" c_fail="" c_neutral="" ratio=""
+  if [[ -n "$resp" ]] && jq -e '(.checks | type) == "object"' >/dev/null 2>&1 <<<"$resp"; then
+    local counts
+    counts="$(jq -r '
+      [.checks | .. | objects | select(has("status")) | .status]
+      | "\(map(select(. == "pass")) | length) \(map(select(. == "fail")) | length) \(map(select(. == "neutral")) | length)"
+    ' <<<"$resp")"
+    read -r c_pass c_fail c_neutral <<<"$counts"
+    ratio="${c_pass}/$(( c_pass + c_fail ))"
+  fi
+  set_output "checks-passed" "$c_pass"
+  set_output "checks-failed" "$c_fail"
+  set_output "checks-neutral" "$c_neutral"
+  set_output "checks-pass-ratio" "$ratio"
+}
+
 # ---------------------------------------------------------------------------
 # Dependency check
 # ---------------------------------------------------------------------------
@@ -160,6 +185,7 @@ if [[ "$WAIT_FOR_URL" == "true" ]]; then
     set_output "level" ""
     set_output "passed" "false"
     set_output "response" ""
+    emit_check_summary ""
     exit 1
   fi
 fi
@@ -199,6 +225,7 @@ if [[ "$scanner_ok" != "true" ]]; then
   set_output "level" ""
   set_output "passed" "false"
   set_output "response" ""
+  emit_check_summary ""
   if [[ "$FAIL_ON_SCANNER_UNAVAILABLE" == "true" ]]; then
     emit_error "Scanner unavailable" \
       "Could not reach $SCANNER_ENDPOINT after $((SCANNER_RETRIES + 1)) attempt(s). Set fail-on-scanner-unavailable: false to soft-fail."
@@ -219,6 +246,7 @@ if ! printf '%s' "$scanner_response" | jq -e . >/dev/null 2>&1; then
   set_output "level" ""
   set_output "passed" "false"
   set_output "response" "$(truncate_for_output "$scanner_response")"
+  emit_check_summary ""
   if [[ "$FAIL_ON_SCANNER_UNAVAILABLE" == "true" ]]; then
     emit_error "Scanner returned malformed response" \
       "Response is not valid JSON. Raw response available in step output 'response'."
@@ -236,6 +264,7 @@ level_name="$(jq -r '.levelName // empty' <<<"$scanner_response")"
 
 truncated_response="$(truncate_for_output "$scanner_response")"
 set_output "response" "$truncated_response"
+emit_check_summary "$scanner_response"
 
 if [[ -z "$level" || ! "$level" =~ ^[0-9]+$ ]]; then
   set_output "level" ""
